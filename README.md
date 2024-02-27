@@ -16,7 +16,7 @@ sudo nano /etc/modules-load.d/containerd.conf  - создаем файл и за
 overlay
 br_netfilter
 
-![Untitled](https://prod-files-secure.s3.us-west-2.amazonaws.com/8d12c45b-f799-402f-957e-9291170f4f2c/0d4be4c2-fe2c-41b2-bc6e-cf5e86af5e5e/Untitled.png)
+![Untitled](https://github.com/Rizikkz/k8s-django/blob/main/Untitled.png)
 
 сохраняем и выходим.
 
