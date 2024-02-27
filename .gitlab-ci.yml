@@ -1,0 +1,35 @@
+stages:
+  - build
+  - publish
+  - deploy
+  
+build_image:
+  stage: build
+  image: docker:24.0.6
+  script:
+    - docker build --build-arg SQL_DATABASE=$SQL_DATABASE --build-arg SQL_USER=$SQL_USER --build-arg SQL_PASSWORD=$SQL_PASSWORD --build-arg SQL_HOST=$SQL_HOST --build-arg SQL_PORT=$SQL_PORT --build-arg DATABASE=$DATABASE -t $CI_REGISTRY/$CI_PROJECT_NAMESPACE/$CI_PROJECT_NAME:$CI_COMMIT_REF_SLUG.$CI_PIPELINE_ID .
+  
+publish_image:
+  stage: publish
+  image: docker:24.0.6
+  before_script:
+    - docker login -u $CI_REGISTRY_USER -p $CI_JOB_TOKEN $CI_REGISTRY
+  script:
+    - docker push $CI_REGISTRY/$CI_PROJECT_NAMESPACE/$CI_PROJECT_NAME:$CI_COMMIT_REF_SLUG.$CI_PIPELINE_ID
+
+deploy:
+  stage: deploy
+  image:
+    name: royalshim85/helm:v01
+    entrypoint: [""]
+  variables:
+    KUBECONFIG: /tmp/.kubeconfig
+  script:
+  - export RELEASE_NAME="$CI_REGISTRY/$CI_PROJECT_NAMESPACE/$CI_PROJECT_NAME:$CI_COMMIT_REF_SLUG.$CI_PIPELINE_ID"
+  - echo $RELEASE_NAME
+  - echo "$K8S_CONF" | base64 -d > $KUBECONFIG
+  - helm upgrade --install helmtest -f ./.helm/prod.yaml ./.helm --set image=$RELEASE_NAME
+  only:
+    - main
+
+

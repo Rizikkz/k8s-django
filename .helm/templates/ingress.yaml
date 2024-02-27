@@ -1,0 +1,29 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  annotations:
+    # acme.cert-manager.io/http01-edit-in-place: "true"
+    # acme.cert-manager.io/http01-ingress-class: nginx
+    # cert-manager.io/cluster-issuer: letsencrypt-staging
+    # nginx.ingress.kubernetes.io/backend-protocol: HTTPS
+    # nginx.ingress.kubernetes.io/rewrite-target: /
+    # nginx.ingress.kubernetes.io/ssl-passthrough: "true"
+  name: django
+  namespace: default
+spec:
+  ingressClassName: nginx
+  rules:
+  - host: python.egs.kz
+    http:
+      paths:
+      - backend:
+          service:
+            name: helmtest
+            port:
+              number: 8080
+        path: /
+        pathType: Prefix
+  tls:
+  - hosts:
+    - python.egs.kz
+    secretName: python-egs-kz

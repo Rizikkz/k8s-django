@@ -1,0 +1,30 @@
+apiVersion: v1
+kind: Pod
+metadata:  
+  labels:
+    app: django
+  name: dbweb
+spec:
+  containers:         
+  - image: postgres:9.6
+    name: db
+    resources: {}
+    ports:
+    - containerPort: 5432
+    env:     
+    - name: POSTGRES_DB
+      value: db_django
+    - name: POSTGRES_USER
+      value: student02
+    - name: POSTGRES_PASSWORD
+      value: a982lsnn
+    volumeMounts:
+    - mountPath: /var/lib/postgresql/data
+      name: postgres-data
+  
+  volumes:
+    - name: postgres-data
+      persistentVolumeClaim:
+        claimName: pvc-db
+    
+    

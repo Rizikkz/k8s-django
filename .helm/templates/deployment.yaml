@@ -1,0 +1,58 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  creationTimestamp: null
+  labels:
+    app: helmtest
+  name: helmtest
+spec:
+  replicas: {{.Values.replicaCount}}
+  selector:
+    matchLabels:
+      app: helmtest
+  strategy: {}
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: helmtest
+    spec:
+      imagePullSecrets:
+      - name: git-auth
+      initContainers:
+      - name: init-migrate
+        image:  {{.Values.image}}
+        command: ["python3 manage.py migrate"]
+      initContainers:
+      - name: init-static
+        image:  {{.Values.image}}
+        command: ["python3", "manage.py", "collectstatic", "--noinput"]
+        volumeMounts:
+        - mountPath: /files/static
+          name: web-data 
+      containers:
+      - image: {{.Values.image}}
+        name: web
+        env:     
+        - name: POSTGRES_DB
+          value: db_django
+        - name: POSTGRES_USER
+          value: student02
+        - name: POSTGRES_PASSWORD
+          value: a982lsnn
+        - name: SQL_HOST
+          value: db
+        - name: SQL_PORT
+          value: '5432'  
+        resources: {} 
+        ports:
+        - containerPort: 8000
+        volumeMounts:
+        - mountPath: /files/static
+          name: web-data                   
+      volumes:        
+        - name: web-data
+          persistentVolumeClaim:
+            claimName: pvc-web    
+    
+status: {}
