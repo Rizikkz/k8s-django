@@ -2,7 +2,7 @@
 
 sudo su;  - заходим под root
 
-`apt update`
+```apt update```
 
 systemctl stop ufw - отключаем файрвол
 systemctl disable ufw- выключаем файрвол
