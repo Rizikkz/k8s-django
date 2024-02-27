@@ -33,9 +33,9 @@ br_netfilter
 
 Добавьте в файл следующие строки
 
-`net.bridge.bridge-nf-call-ip6tables = 1`
-`net.bridge.bridge-nf-call-iptables = 1`
-`net.ipv4.ip_forward = 1`
+`net.bridge.bridge-nf-call-ip6tables = 1
+net.bridge.bridge-nf-call-iptables = 1
+net.ipv4.ip_forward = 1`
 
 ![Untitled](https://github.com/Rizikkz/k8s-django/blob/main/image/Untitled%20(1).png)
 
