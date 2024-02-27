@@ -4,13 +4,14 @@ sudo su;  - заходим под root
 
 ```apt update```
 
-systemctl stop ufw - отключаем файрвол
-systemctl disable ufw- выключаем файрвол
-swapoff -a  - отключаем swap 
+`systemctl stop ufw` - отключаем файрвол
+`systemctl disable ufw`- выключаем файрвол
+`swapoff -a`  - отключаем swap 
 
-free -h - проверяем что swap отключен 
+`free -h` - проверяем что swap отключен 
 
-sudo sed -i '/ swap / s/^\(.*\)$/#\1/g' /etc/fstab -  комментируем строку , чтобы после перезагрузки сохранились изменения 
+`bash 
+sudo sed -i '/ swap / s/^\(.*\)$/#\1/g' /etc/fstab` -  комментируем строку , чтобы после перезагрузки сохранились изменения 
 
 sudo nano /etc/modules-load.d/containerd.conf  - создаем файл и записываем переменные 
 
