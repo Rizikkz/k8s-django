@@ -36,7 +36,7 @@ net.bridge.bridge-nf-call-ip6tables = 1
 net.bridge.bridge-nf-call-iptables = 1
 net.ipv4.ip_forward = 1
 
-![Untitled](https://prod-files-secure.s3.us-west-2.amazonaws.com/8d12c45b-f799-402f-957e-9291170f4f2c/0bca4331-cb8c-4263-9ec6-69abb2d1c788/Untitled.png)
+![Untitled](https://github.com/Rizikkz/k8s-django/blob/main/Untitled%20(1).png)
 
 Перезагрузите конфигурацию, набрав :
 
